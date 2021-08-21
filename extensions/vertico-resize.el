@@ -50,7 +50,9 @@ Note that a full minibuffer can only be grown in size."
   :global t
   (cond
    (vertico-resize-mode
-    (advice-add #'vertico--setup :before #'vertico-resize--minibuffer))
+    (if (eq vertico-resize t)
+	(message "Vertico resize is not compatible with vertico-resize set to shrink and grow.")
+      (advice-add #'vertico--setup :before #'vertico-resize--minibuffer)))
    (t
     (advice-remove #'vertico--setup #'vertico-resize--minibuffer))))
 
